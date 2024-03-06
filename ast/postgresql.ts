@@ -269,6 +269,24 @@ export type create_column_definition = {
         resource: 'column';
       };
 
+
+
+export type alter_column_definition = {
+        column: column_ref;
+        definition: data_type;
+        nullable: column_constraint['nullable'];
+        default_val: column_constraint['default_val'];
+        auto_increment?: 'auto_increment';
+        unique?: 'unique' | 'unique key';
+        primary?: 'key' | 'primary key';
+        comment?: keyword_comment;
+        collate?: collate_expr;
+        column_format?: column_format;
+        storage?: storage;
+        reference_definition?: reference_definition;
+        resource: 'column';
+      };
+
 export type column_constraint = { nullable: literal_null | literal_not_null; default_val: default_expr; };
 
 export type collate_expr = { type: 'collate'; symbol: '=' | null; value: ident; };
@@ -354,7 +372,7 @@ export type alter_table_stmt = AstStatement<alter_table_stmt_node>;
 
 export type alter_action_list = alter_action[];
 
-export type alter_action = ALTER_ADD_COLUMN | ALTER_ADD_CONSTRAINT | ALTER_DROP_COLUMN | ALTER_ADD_INDEX_OR_KEY | ALTER_ADD_FULLETXT_SPARITAL_INDEX | ALTER_RENAME | ALTER_ALGORITHM | ALTER_LOCK;
+export type alter_action = ALTER_ADD_COLUMN | ALTER_ADD_CONSTRAINT | ALTER_DROP_COLUMN | ALTER_ALTER_COLUMN | ALTER_ADD_INDEX_OR_KEY | ALTER_ADD_FULLETXT_SPARITAL_INDEX | ALTER_RENAME | ALTER_ALGORITHM | ALTER_LOCK;
 
 
 
@@ -364,6 +382,15 @@ export type ALTER_ADD_COLUMN = {
         resource: 'column';
         type: 'alter';
       } & create_column_definition;;
+
+
+
+export type ALTER_ALTER_COLUMN = {
+        action: 'alter';
+        keyword: KW_COLUMN;
+        resource: 'column';
+        type: 'alter';
+      } & alter_column_definition;;
 
 
 
@@ -1491,6 +1518,8 @@ type KW_END = never;
 
 type KW_CAST = never;
 
+type KW_TYPE = never;
+
 type KW_BOOL = never;
 
 type KW_BOOLEAN = never;
@@ -1778,6 +1807,7 @@ export type mem_chain = ident_name[];;
 export type data_type = {
                     dataType: string;
                     length?: number;
+                    prefix?: string;
                     suffix?: string;
                     scale?: number;
                     parentheses?: boolean;

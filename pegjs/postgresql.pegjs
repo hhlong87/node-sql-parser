@@ -1694,8 +1694,7 @@ ALTER_ADD_COLUMN
   = KW_ADD __
     kc:KW_COLUMN? __
     cd:create_column_definition {
-      /*
-      => {
+      /* => {
         action: 'add';
         keyword: KW_COLUMN;
         resource: 'column';
@@ -1715,6 +1714,13 @@ ALTER_ALTER_COLUMN
   = KW_ALTER __
     kc:KW_COLUMN? __
     cd:alter_column_definition {
+      /* => {
+        action: 'alter';
+        keyword: KW_COLUMN;
+        resource: 'column';
+        type: 'alter';
+      } & alter_column_definition;
+      */
       return {
         action: 'alter',
         ...cd,
