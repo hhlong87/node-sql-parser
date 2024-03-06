@@ -75,6 +75,7 @@ for (const r of ast.rules) {
             value = `{
                     dataType: string;
                     length?: number;
+                    prefix?: string;
                     suffix?: string;
                     scale?: number;
                     parentheses?: boolean;
