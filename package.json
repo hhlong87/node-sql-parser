@@ -1,6 +1,6 @@
 {
-  "name": "node-sql-parser",
-  "version": "5.3.10",
+  "name": "node-sql-parser-fork",
+  "version": "1.0.2",
   "description": "simple node sql parser",
   "main": "index.js",
   "types": "types.d.ts",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taozhi8833998/node-sql-parser.git"
+    "url": "git+https://github.com/hhlong87/node-sql-parser.git"
   },
   "pre-commit": "coverLocal",
   "keywords": [
@@ -31,7 +31,7 @@
     "ast",
     "sql-ast"
   ],
-  "author": "taozhi8833998 <taozhi8833998@163.com>",
+  "author": "hh.long.87 <hh.long.87@gmail.com>",
   "files": [
     "ast/",
     "build",
@@ -47,9 +47,9 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/taozhi8833998/node-sql-parser/issues"
+    "url": "https://github.com/hhlong87/node-sql-parser/issues"
   },
-  "homepage": "https://github.com/taozhi8833998/node-sql-parser#readme",
+  "homepage": "https://github.com/hhlong87/node-sql-parser#readme",
   "engines": {
     "node": ">=8"
   },
