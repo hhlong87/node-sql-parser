@@ -14,10 +14,24 @@ describe('Postgres Customize', () => {
 
   const SQL_LIST = [
     {
-      title: 'alter table alter column',
+      title: 'alter table alter column set data type',
       sql: [
         'ALTER TABLE address ALTER COLUMN name TYPE VARCHAR(10), ALTER COLUMN age TYPE BOOLEAN;',
         'ALTER TABLE "address" ALTER COLUMN name TYPE VARCHAR(10), ALTER COLUMN age TYPE BOOLEAN'
+      ]
+    },
+    {
+      title: 'alter table alter column set default',
+      sql: [
+        'ALTER TABLE address ALTER COLUMN name SET DEFAULT `name`;',
+        'ALTER TABLE "address" ALTER COLUMN name SET DEFAULT `name`'
+      ]
+    },
+    {
+      title: 'alter table alter column set null',
+      sql: [
+        'ALTER TABLE address ALTER COLUMN name SET DEFAULT NULL;',
+        'ALTER TABLE "address" ALTER COLUMN name SET DEFAULT NULL'
       ]
     }
   ]
