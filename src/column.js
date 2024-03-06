@@ -70,6 +70,13 @@ function columnDataType(definition) {
   let result = dataTypeToSQL({ dataType, length, suffix, scale, parentheses })
   if (prefix && prefix.length) result = `${prefix} ${result}`
   if (expr) result += exprToSQL(expr)
+  if (prefix && prefix.length) {
+    if (result) {
+      result = `${prefix} ${result}`
+    } else {
+      result = prefix
+    }
+  }
   if (definition.array) {
     const arrayExpr = arrayDimensionToSymbol(definition)
     const space = /^\[.*\]$/.test(arrayExpr) ? '' : ' '
