@@ -3862,6 +3862,8 @@ KW_END      = "END"i        !ident_start
 
 KW_CAST     = "CAST"i       !ident_start { return 'CAST' }
 
+KW_BOOL     = "BOOL"i     !ident_start { return 'BOOL'; }
+KW_BOOLEAN  = "BOOLEAN"i  !ident_start { return 'BOOLEAN'; }
 KW_BINARY    = "BINARY"i    !ident_start { return 'BINARY'; }
 KW_VARBINARY = "VARBINARY"i !ident_start { return 'VARBINARY'; }
 KW_BIT      = "BIT"i      !ident_start { return 'BIT'; }
@@ -4235,7 +4237,7 @@ data_type
   / geometry_type
 
 boolean_type
-  = 'boolean'i { return { dataType: 'BOOLEAN' }; }
+  = t:(KW_BOOL / KW_BOOLEAN) { /* => data_type */ return { dataType: t }}
 
 blob_type
   = b:('blob'i / 'tinyblob'i / 'mediumblob'i / 'longblob'i) { return { dataType: b.toUpperCase() }; }
