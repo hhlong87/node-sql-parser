@@ -1346,8 +1346,8 @@ create_column_definition
 
 alter_column_definition
   = c:column_ref __
-    KW_TYPE? __
-    d:data_type __
+    kw:(KW_TYPE / KW_SET / KW_DROP)? __
+    d:data_type? __
     cdo:column_definition_opt_list? {
       /*
       => {
@@ -1371,7 +1371,7 @@ alter_column_definition
         column: c,
         definition: {
           ...d,
-          prefix: 'TYPE'
+          prefix: kw
         },
         resource: 'column',
         ...(cdo || {})

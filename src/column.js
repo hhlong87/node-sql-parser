@@ -65,8 +65,14 @@ function columnDataType(definition) {
   let result = dataType
   if (length != null) result += `(${[length, scale].filter(val => val != null).join(', ')})`
   if (suffix && suffix.length) result += ` ${suffix.join(' ')}`
-  if (prefix && prefix.length) result = `${prefix} ${result}`
   if (expr) result += exprToSQL(expr)
+  if (prefix && prefix.length) {
+    if (result) {
+      result = `${prefix} ${result}`
+    } else {
+      result = prefix
+    }
+  }
   if (definition.array) {
     const arrayExpr = arrayDimensionToSymbol(definition)
     const space = /^\[.*\]$/.test(arrayExpr) ? '' : ' '
