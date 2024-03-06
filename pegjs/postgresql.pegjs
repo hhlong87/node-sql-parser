@@ -701,7 +701,7 @@ create_func_opt
     }
   }
   / return_stmt
-  
+
 create_function_stmt
   = a:KW_CREATE __
   or:(KW_OR __ KW_REPLACE)? __
@@ -1074,7 +1074,7 @@ include_column
       columns:c,
     }
   }
-  
+
 create_index_stmt
   = a:KW_CREATE __
   kw:KW_UNIQUE? __
@@ -1366,6 +1366,40 @@ create_column_definition
       return {
         column: c,
         definition: d,
+        resource: 'column',
+        ...(cdo || {})
+      }
+    }
+
+alter_column_definition
+  = c:column_ref __
+    KW_TYPE? __
+    d:data_type __
+    cdo:column_definition_opt_list? {
+      /*
+      => {
+        column: column_ref;
+        definition: data_type;
+        nullable: column_constraint['nullable'];
+        default_val: column_constraint['default_val'];
+        auto_increment?: 'auto_increment';
+        unique?: 'unique' | 'unique key';
+        primary?: 'key' | 'primary key';
+        comment?: keyword_comment;
+        collate?: collate_expr;
+        column_format?: column_format;
+        storage?: storage;
+        reference_definition?: reference_definition;
+        resource: 'column';
+      }
+      */
+      columnList.add(`create::${c.table}::${c.column.expr.value}`)
+      return {
+        column: c,
+        definition: {
+          ...d,
+          prefix: 'TYPE'
+        },
         resource: 'column',
         ...(cdo || {})
       }
@@ -1796,6 +1830,7 @@ alter_action
   = ALTER_ADD_COLUMN
   / ALTER_ADD_CONSTRAINT
   / ALTER_DROP_COLUMN
+  / ALTER_ALTER_COLUMN
   / ALTER_ADD_INDEX_OR_KEY
   / ALTER_ADD_FULLETXT_SPARITAL_INDEX
   / ALTER_RENAME
@@ -1823,6 +1858,19 @@ ALTER_ADD_COLUMN
       return {
         action: 'add',
         if_not_exists: ife,
+        ...cd,
+        keyword: kc,
+        resource: 'column',
+        type: 'alter',
+      }
+    }
+
+ALTER_ALTER_COLUMN
+  = KW_ALTER __
+    kc:KW_COLUMN? __
+    cd:alter_column_definition {
+      return {
+        action: 'alter',
         ...cd,
         keyword: kc,
         resource: 'column',
@@ -2276,7 +2324,7 @@ view_options
     // => 'restrict' | 'cascade';
     return kc.toLowerCase()
   }
-  
+
 reference_option
   = kw:KW_CURRENT_TIMESTAMP __ LPAREN __ l:expr_list? __ RPAREN {
     // => { type: 'function'; name: string; args: expr_list; }
@@ -3046,7 +3094,7 @@ transaction_mode_isolation_level
       value: `read ${e.toLowerCase()}`
     }
   }
-  
+
 transaction_mode
   = 'ISOLATION'i __ 'LEVEL'i __ l:transaction_mode_isolation_level {
     // => { type: 'origin'; value: string; }
@@ -4611,7 +4659,7 @@ column_ref
         table: null,
         column: { expr: col },
         collate: ce && ce[1],
-      }; 
+      };
     }
 
 column_ref_quoted
@@ -5060,7 +5108,7 @@ make_interval_func_args
       return { type: 'expr_list', value: createList(head, tail) };
     }
   / expr_list
-  
+
 make_interval_func_clause
   = name:'make_interval'i __ LPAREN __ l:make_interval_func_args __ RPAREN {
     // => { type: 'function'; name: proc_func_name; args: make_interval_func_args; }
@@ -5071,7 +5119,7 @@ make_interval_func_clause
         ...getLocationObject(),
       }
   }
-  
+
 func_call
   = trim_func_clause / tablefunc_clause / substring_funcs_clause / make_interval_func_clause
   / name:'now'i __ LPAREN __ l:expr_list? __ RPAREN __ 'at'i __ KW_TIME __ 'zone'i __ z:literal_string {
@@ -5174,7 +5222,7 @@ cast_data_type
     if (p && s) t.quoted = '"'
     return t
   }
-  
+
 cast_double_colon
   = s:(KW_DOUBLE_COLON __ cast_data_type)+ __ alias:alias_clause? {
     /* => {

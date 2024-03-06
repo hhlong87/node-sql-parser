@@ -65,9 +65,10 @@ function columnRefToSQL(expr) {
 
 function columnDataType(definition) {
   if (!definition) return
-  const { dataType, length, suffix, scale, expr } = definition
+  const { dataType, length, suffix, prefix, scale, expr } = definition
   const parentheses = length != null && true || false
   let result = dataTypeToSQL({ dataType, length, suffix, scale, parentheses })
+  if (prefix && prefix.length) result = `${prefix} ${result}`
   if (expr) result += exprToSQL(expr)
   if (definition.array) {
     const arrayExpr = arrayDimensionToSymbol(definition)
