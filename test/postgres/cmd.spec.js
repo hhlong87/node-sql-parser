@@ -33,6 +33,13 @@ describe('Postgres Customize', () => {
         'ALTER TABLE address ALTER COLUMN name SET DEFAULT NULL;',
         'ALTER TABLE "address" ALTER COLUMN name SET DEFAULT NULL'
       ]
+    },
+    {
+      title: 'alter table rename column',
+      sql: [
+        'ALTER TABLE address RENAME COLUMN name TO new_name;',
+        'ALTER TABLE "address" RENAME COLUMN name TO new_name'
+      ]
     }
   ]
 
