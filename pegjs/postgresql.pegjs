@@ -1919,6 +1919,7 @@ alter_action
   / ALTER_ADD_CONSTRAINT
   / ALTER_DROP_COLUMN
   / ALTER_ALTER_COLUMN
+  / ALTER_RENAME_COLUMN
   / ALTER_ADD_INDEX_OR_KEY
   / ALTER_ADD_FULLETXT_SPARITAL_INDEX
   / ALTER_RENAME
@@ -1992,6 +1993,30 @@ ALTER_DROP_COLUMN
         keyword: kc,
         resource: 'column',
         type: 'alter',
+      }
+    }
+
+ALTER_RENAME_COLUMN
+  = KW_RENAME __ kc:KW_COLUMN? __ c:column_ref __
+    kw:KW_TO __
+    tn:column_ref {
+      /* => {
+        action: 'rename';
+        type: 'alter',
+        resource: 'column',
+        keyword: KW_COLUMN,
+        old_column: column_ref,
+        prefix: 'to',
+        column: column_ref
+      } */
+      return {
+        action: 'rename',
+        type: 'alter',
+        resource: 'column',
+        keyword: 'column',
+        old_column: c,
+        prefix: kw && kw[0].toLowerCase(),
+        column: tn
       }
     }
 

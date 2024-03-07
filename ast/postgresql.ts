@@ -466,7 +466,7 @@ export type alter_table_stmt = AstStatement<alter_table_stmt_node>;
 
 export type alter_action_list = alter_action[];
 
-export type alter_action = ALTER_ADD_COLUMN | ALTER_ADD_CONSTRAINT | ALTER_DROP_COLUMN | ALTER_ALTER_COLUMN | ALTER_ADD_INDEX_OR_KEY | ALTER_ADD_FULLETXT_SPARITAL_INDEX | ALTER_RENAME | ALTER_ALGORITHM | ALTER_LOCK | ALTER_OWNER_TO | ALTER_COLUMN_DATA_TYPE | ALTER_COLUMN_DEFAULT | ALTER_COLUMN_NOT_NULL;
+export type alter_action = ALTER_ADD_COLUMN | ALTER_ADD_CONSTRAINT | ALTER_DROP_COLUMN | ALTER_ALTER_COLUMN | ALTER_RENAME_COLUMN | ALTER_ADD_INDEX_OR_KEY | ALTER_ADD_FULLETXT_SPARITAL_INDEX | ALTER_RENAME | ALTER_ALGORITHM | ALTER_LOCK | ALTER_OWNER_TO | ALTER_COLUMN_DATA_TYPE | ALTER_COLUMN_DEFAULT | ALTER_COLUMN_NOT_NULL;
 
 
 
@@ -496,6 +496,18 @@ export type ALTER_DROP_COLUMN = {
         if_exists: if_exists;
         resource: 'column';
         type: 'alter';
+      };
+
+
+
+export type ALTER_RENAME_COLUMN = {
+        action: 'rename';
+        type: 'alter',
+        resource: 'column',
+        keyword: KW_COLUMN,
+        old_column: column_ref,
+        prefix: 'to',
+        column: column_ref
       };
 
 
