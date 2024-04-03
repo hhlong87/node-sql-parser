@@ -14,6 +14,20 @@ describe('Mysql Customize', () => {
 
   const SQL_LIST = [
     {
+      title: 'Create table option no quote',
+      sql: [
+        "CREATE TABLE `table_name` (`id` int) ENGINE InnoDB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'test comment'",
+        "CREATE TABLE `table_name` (`id` INT) ENGINE INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'test comment'",
+      ],
+    },
+    {
+      title: 'Create table option with quote',
+      sql: [
+        "CREATE TABLE `table_name` (`id` int) ENGINE 'InnoDB' DEFAULT CHARSET 'utf8mb4' COLLATE 'utf8mb4_0900_ai_ci' COMMENT 'test comment'",
+        "CREATE TABLE `table_name` (`id` INT) ENGINE INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'test comment'",
+      ],
+    },
+    {
       title: 'BOOL date type',
       sql: [
         "CREATE TABLE `table_name` (`is_bool` bool) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
