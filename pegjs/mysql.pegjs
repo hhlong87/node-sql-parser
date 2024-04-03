@@ -1734,7 +1734,7 @@ table_option
       value: v.join('').toUpperCase()
     }
   }
-  / kw:'ENGINE'i __ s:(KW_ASSIGIN_EQUAL)? __ c:ident_name {
+  / kw:'ENGINE'i __ s:(KW_ASSIGIN_EQUAL)? __ c:ident_without_kw {
     return {
       keyword: kw.toLowerCase(),
       symbol: s,
