@@ -14,6 +14,20 @@ describe('Mysql Customize', () => {
 
   const SQL_LIST = [
     {
+      title: 'Rename column MySQL 5.x',
+      sql: [
+        "ALTER TABLE `table_name` CHANGE abc xyz VARCHAR(10) NOT NULL, ALGORITHM = INPLACE, LOCK = NONE",
+        "ALTER TABLE `table_name` CHANGE `abc` `xyz` VARCHAR(10) NOT NULL, ALGORITHM = INPLACE, LOCK = NONE",
+      ],
+    },
+    {
+      title: 'Rename column MySQL 8.x',
+      sql: [
+        "ALTER TABLE `table_name` RENAME COLUMN abc TO xyz",
+        "ALTER TABLE `table_name` RENAME COLUMN `abc` TO `xyz`",
+      ],
+    },
+    {
       title: 'Create table option no quote',
       sql: [
         "CREATE TABLE `table_name` (`id` int) ENGINE InnoDB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'test comment'",
