@@ -1235,7 +1235,6 @@ alter_action
   / ALTER_ADD_INDEX_OR_KEY
   / ALTER_ADD_FULLETXT_SPARITAL_INDEX
   / ALTER_RENAME_COLUMN
-  / ALTER_RENAME_COLUMN_LEGACY
   / ALTER_RENAME_TABLE
   / ALTER_ALGORITHM
   / ALTER_LOCK
@@ -1345,25 +1344,6 @@ ALTER_RENAME_COLUMN
       old_column: c,
       prefix: kw && kw[0].toLowerCase(),
       column: tn
-    }
-  }
-
-ALTER_RENAME_COLUMN_LEGACY
-  = KW_CHANGE __ c:column_ref __ tn:column_ref __
-  cd:create_column_definition
-  al:ALTER_ALGORITHM? __
-  lo:ALTER_LOCK? __ {
-    return {
-      action: 'rename',
-      type: 'alter',
-      resource: 'column',
-      keyword: 'column',
-      old_column: c,
-      prefix: '',
-      column: tn,
-      ...cd,
-      algorithm_option: al,
-      lock_option: lo
     }
   }
 
@@ -3830,7 +3810,6 @@ KW_INSERT   = "INSERT"i     !ident_start
 KW_RECURSIVE= "RECURSIVE"   !ident_start
 KW_REPLACE  = "REPLACE"i    !ident_start
 KW_RENAME   = "RENAME"i     !ident_start
-KW_CHANGE   = "CHANGE"i     !ident_start
 KW_IGNORE   = "IGNORE"i     !ident_start
 KW_EXPLAIN  = "EXPLAIN"i    !ident_start
 KW_PARTITION = "PARTITION"i !ident_start { return 'PARTITION' }
