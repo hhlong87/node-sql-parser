@@ -116,6 +116,8 @@ function columnOption(definition) {
     default_val: defaultOpt, generated,
     auto_increment: autoIncrement,
     unique: uniqueKey,
+    generated_by: generatedBy,
+    as_identity: asIdentity,
     primary_key: primaryKey,
     column_format: columnFormat,
     reference_definition: referenceDefinition,
@@ -129,6 +131,7 @@ function columnOption(definition) {
   const { database } = getParserOpt()
   if (constraint) columnOpt.push(toUpper(constraint.keyword), literalToSQL(constraint.constraint))
   columnOpt.push(constraintDefinitionToSQL(check))
+  columnOpt.push(toUpper(generatedBy), toUpper(asIdentity))
   columnOpt.push(generatedExpressionToSQL(generated))
   if (generated) columnOpt.push(nullSQL)
   columnOpt.push(autoIncrementToSQL(autoIncrement), toUpper(primaryKey), toUpper(uniqueKey), commentToSQL(comment))
