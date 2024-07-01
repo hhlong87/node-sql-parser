@@ -941,6 +941,25 @@ create_column_definition
       }
     }
 
+alter_column_definition
+  = c:column_ref __
+    kw:(KW_SET / KW_DROP) __
+    d:default_optional_expr? __
+    al:ALTER_ALGORITHM? __
+    lo:ALTER_LOCK? __ {
+      return {
+        column: c,
+        definition: {
+          ...d,
+          prefix: kw
+        },
+        algorithm_option: al,
+        lock_option: lo,
+        default_val: d
+      }
+    }
+
+
 trigger_definer
   =  'DEFINER'i __ KW_ASSIGIN_EQUAL __ u:(backticks_quoted_ident / literal_string) __ '@' __ h:(backticks_quoted_ident / literal_string) {
     const left = { type: 'origin', value: 'definer' }
@@ -1056,6 +1075,14 @@ storage
   }
 default_expr
   = KW_DEFAULT __ ce:expr {
+    return {
+      type: 'default',
+      value: ce
+    }
+  }
+
+default_optional_expr
+  = KW_DEFAULT __ ce: (literal / expr)? {
     return {
       type: 'default',
       value: ce
@@ -1239,6 +1266,7 @@ alter_action
   / ALTER_ADD_COLUMN
   / ALTER_DROP_COLUMN
   / ALTER_MODIFY_COLUMN
+  / ALTER_ALTER_COLUMN
   / ALTER_ADD_INDEX_OR_KEY
   / ALTER_ADD_FULLETXT_SPARITAL_INDEX
   / ALTER_RENAME_COLUMN
@@ -1353,6 +1381,26 @@ ALTER_DROP_COLUMN
       return {
         action: 'drop',
         column: c,
+        resource: 'column',
+        type: 'alter',
+      }
+    }
+
+ALTER_ALTER_COLUMN
+  = KW_ALTER __
+    kc:KW_COLUMN? __
+    cd:alter_column_definition {
+      /* => {
+        action: 'alter';
+        keyword: KW_COLUMN;
+        resource: 'column';
+        type: 'alter';
+      } & alter_column_definition;
+      */
+      return {
+        action: 'alter',
+        ...cd,
+        keyword: kc,
         resource: 'column',
         type: 'alter',
       }

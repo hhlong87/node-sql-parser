@@ -62,6 +62,27 @@ describe('Mysql Customize', () => {
         "CREATE TABLE `table_name` (`double_val` DOUBLE)",
       ],
     },
+    {
+      title: 'Alter column drop default',
+      sql: [
+        "ALTER TABLE table_name ALTER COLUMN column_name DROP DEFAULT, algorithm = inplace, lock = none",
+        "ALTER TABLE `table_name` ALTER COLUMN `column_name` DROP DEFAULT, ALGORITHM = INPLACE, LOCK = NONE",
+      ],
+    },
+    {
+      title: 'Alter column set default string',
+      sql: [
+        "ALTER TABLE table_name ALTER COLUMN column_name SET DEFAULT 'default_name', algorithm = inplace, lock = none",
+        "ALTER TABLE `table_name` ALTER COLUMN `column_name` SET DEFAULT 'default_name', ALGORITHM = INPLACE, LOCK = NONE",
+      ],
+    },
+    {
+      title: 'Alter column set default NULL',
+      sql: [
+        "ALTER TABLE table_name ALTER COLUMN column_name SET DEFAULT NULL, algorithm = inplace, lock = none",
+        "ALTER TABLE `table_name` ALTER COLUMN `column_name` SET DEFAULT NULL, ALGORITHM = INPLACE, LOCK = NONE",
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
