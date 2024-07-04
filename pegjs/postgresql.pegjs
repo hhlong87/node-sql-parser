@@ -5100,6 +5100,7 @@ literal_string
 
 default_literal_string
   = KW_DEFAULT {
+    // => { type: 'default'; value: 'DEFAULT'; }
     return {
       type: 'default',
       value: 'DEFAULT'
