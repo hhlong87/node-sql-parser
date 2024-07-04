@@ -54,7 +54,14 @@ describe('Postgres Customize', () => {
         'ALTER TABLE address RENAME COLUMN name TO new_name;',
         'ALTER TABLE "address" RENAME COLUMN name TO new_name'
       ]
-    }
+    },
+    {
+      title: 'Insert DEFAULT value',
+      sql: [
+        'INSERT INTO table_name (col1, col2, col3) VALUES (NOW(), NULL, DEFAULT)',
+        'INSERT INTO "table_name" (col1, col2, col3) VALUES (NOW(),NULL,DEFAULT)',
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
