@@ -83,6 +83,13 @@ describe('Mysql Customize', () => {
         "ALTER TABLE `table_name` ALTER COLUMN `column_name` SET DEFAULT NULL, ALGORITHM = INPLACE, LOCK = NONE",
       ],
     },
+    {
+      title: 'Insert DEFAULT value',
+      sql: [
+        "INSERT INTO table_name (col1, col2, col3) VALUES (NOW(), NULL, DEFAULT)",
+        "INSERT INTO `table_name` (col1, col2, col3) VALUES (NOW(),NULL,DEFAULT)",
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
