@@ -4217,6 +4217,7 @@ comparison_expr
       else return createBinaryExpr(rh.op, left, rh.right);
     }
   / literal_string
+  / default_literal_string
   / column_ref
 
 exists_expr
@@ -5096,6 +5097,14 @@ literal_string
       };
     }
   / literal_double_quoted_string
+
+default_literal_string
+  = KW_DEFAULT {
+    return {
+      type: 'default',
+      value: 'DEFAULT'
+    }
+  }
 
 literal_double_quoted_string
   = ca:("\"" single_quote_char* "\"") !DOT {
