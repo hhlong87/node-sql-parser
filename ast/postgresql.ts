@@ -1260,7 +1260,7 @@ export type and_expr = binary_expr;
 
 export type not_expr = comparison_expr | exists_expr | unary_expr;
 
-export type comparison_expr = binary_expr | literal_string | column_ref;
+export type comparison_expr = binary_expr | literal_string | default_literal_string | column_ref;
 
 export type exists_expr = unary_expr;
 
@@ -1515,6 +1515,8 @@ export type literal_not_null = { type: 'not null'; value: 'not null' };
 export type literal_bool = { type: 'bool', value: true } | { type: 'bool', value: false };
 
 export type literal_string = { type: 'single_quote_string'; value: string; } | literal_double_quoted_string;
+
+export type default_literal_string = { type: 'default'; value: 'DEFAULT'; };
 
 export type literal_double_quoted_string = { type: 'string'; value: string; };
 
