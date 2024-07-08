@@ -90,6 +90,20 @@ describe('Mysql Customize', () => {
         "INSERT INTO `table_name` (col1, col2, col3) VALUES (NOW(),NULL,DEFAULT)",
       ],
     },
+    {
+      title: 'Create table partition by range',
+      sql: [
+        "CREATE TABLE table_name(id int, partition_date date) PARTITION BY RANGE (to_days(`partition_date`)) (PARTITION p20230803 VALUES LESS THAN (739100) ENGINE = InnoDB, PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = InnoDB) ENGINE = InnoDB",
+        "CREATE TABLE `table_name` (`id` INT, `partition_date` DATE) PARTITION BY RANGE (to_days(`partition_date`)) (PARTITION p20230803 VALUES LESS THAN (739100) ENGINE = InnoDB, PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = InnoDB) ENGINE = InnoDB",
+      ],
+    },
+    {
+      title: 'Create table partition by key',
+      sql: [
+        "CREATE TABLE table_name(id int, amount INT) PARTITION BY KEY (amount) PARTITIONS 5",
+        "CREATE TABLE `table_name` (`id` INT, `amount` INT) PARTITION BY KEY (amount) PARTITIONS 5",
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
