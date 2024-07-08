@@ -1796,7 +1796,12 @@ table_option
       value: c.toUpperCase()
     }
   }
-
+  / KW_PARTITION __ KW_BY __ rest:.* {
+    return {
+      keyword: 'partition by',
+      value: rest.join('')
+    }
+  }
 
 ALTER_ADD_FULLETXT_SPARITAL_INDEX
   = KW_ADD __
