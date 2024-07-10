@@ -1429,7 +1429,7 @@ export type default_literal_string = { type: 'default'; value: 'DEFAULT'; };
 
 export type literal_double_quoted_string = { type: 'string'; value: string; };
 
-export type literal_datetime = { type: 'TIME' | 'DATE' | 'TIMESTAMP' | 'DATETIME', value: string };
+export type literal_datetime = { type: 'TIME' | 'DATE' | 'TIMESTAMPTZ' | 'TIMESTAMP' | 'DATETIME', value: string };
 
 export type single_quote_char = string;
 
@@ -1696,6 +1696,8 @@ type KW_ROWS = never;
 type KW_TIME = never;
 
 type KW_TIMESTAMP = never;
+
+type KW_TIMESTAMPTZ = never;
 
 type KW_TRUNCATE = never;
 
