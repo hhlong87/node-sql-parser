@@ -5352,7 +5352,7 @@ extract_filed
     return f
   }
 extract_func
-  = kw:KW_EXTRACT __ LPAREN __ f:extract_filed __ KW_FROM __ t:(KW_TIMESTAMP / KW_INTERVAL / KW_TIME / KW_DATE)? __ s:expr __ RPAREN {
+  = kw:KW_EXTRACT __ LPAREN __ f:extract_filed __ KW_FROM __ t:(KW_TIMESTAMPTZ / KW_TIMESTAMP / KW_INTERVAL / KW_TIME / KW_DATE)? __ s:expr __ RPAREN {
     // => { type: 'extract'; args: { field: extract_filed; cast_type: 'TIMESTAMP' | 'INTERVAL' | 'TIME'; source: expr; }}
     return {
         type: kw.toLowerCase(),
@@ -5590,15 +5590,15 @@ literal_double_quoted_string
     }
 
 literal_datetime
-  = type:(KW_TIME / KW_DATE / KW_TIMESTAMP / KW_DATETIME) __ ca:("'" single_char* "'") {
-      // => { type: 'TIME' | 'DATE' | 'TIMESTAMP' | 'DATETIME', value: string }
+  = type:(KW_TIME / KW_DATE / KW_TIMESTAMPTZ / KW_TIMESTAMP / KW_DATETIME) __ ca:("'" single_char* "'") {
+      // => { type: 'TIME' | 'DATE' | 'TIMESTAMPTZ' | 'TIMESTAMP' | 'DATETIME', value: string }
       return {
         type: type.toLowerCase(),
         value: ca[1].join('')
       };
     }
-  / type:(KW_TIME / KW_DATE / KW_TIMESTAMP / KW_DATETIME) __ ca:("\"" single_quote_char* "\"") {
-    // => { type: 'TIME' | 'DATE' | 'TIMESTAMP' | 'DATETIME', value: string }
+  / type:(KW_TIME / KW_DATE / KW_TIMESTAMPTZ / KW_TIMESTAMP / KW_DATETIME) __ ca:("\"" single_quote_char* "\"") {
+    // => { type: 'TIME' | 'DATE' | 'TIMESTAMPTZ' | 'TIMESTAMP' | 'DATETIME', value: string }
       return {
         type: type.toLowerCase(),
         value: ca[1].join('')
