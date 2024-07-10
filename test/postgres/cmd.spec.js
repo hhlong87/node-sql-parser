@@ -62,6 +62,13 @@ describe('Postgres Customize', () => {
         'INSERT INTO "table_name" (col1, col2, col3) VALUES (NOW(),NULL,DEFAULT)',
       ],
     },
+    {
+      title: 'timestamptz',
+      sql: [
+        'CREATE TABLE table_name (created_at timestamptz NOT NULL, updated_at timestamp NOT NULL)',
+        'CREATE TABLE "table_name" (created_at TIMESTAMPTZ NOT NULL, updated_at TIMESTAMP NOT NULL)',
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
