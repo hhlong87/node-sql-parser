@@ -104,6 +104,13 @@ describe('Mysql Customize', () => {
         "CREATE TABLE `table_name` (`id` INT, `amount` INT) PARTITION BY KEY (amount) PARTITIONS 5",
       ],
     },
+    {
+      title: 'Create table bit',
+      sql: [
+        "CREATE TABLE table_name(amount1 bit null, amount2 bit(10) not null)",
+        "CREATE TABLE `table_name` (`amount1` BIT NULL, `amount2` BIT(10) NOT NULL)",
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
