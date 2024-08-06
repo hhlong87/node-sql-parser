@@ -166,7 +166,7 @@ describe('insert', () => {
       // TODO: reserve original quote
       expect(parser.sqlify(parser.astify(`INSERT INTO \`t\`
       (\`a\`, \`b\`) VALUES
-      (X'AD', 0x123BF)`))).to.be.equal("INSERT INTO `t` (a, b) VALUES (X'AD',0x123BF)")
+      (X'AD', 0x123BF)`))).to.be.equal("INSERT INTO `t` (`a`, `b`) VALUES (X'AD',0x123BF)")
     })
 
     it('should support replace into', () => {
