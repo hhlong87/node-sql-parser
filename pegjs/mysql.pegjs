@@ -2955,7 +2955,7 @@ replace_insert_stmt
     ig:KW_IGNORE?  __
     it:KW_INTO? __
     t:table_name  __
-    p:insert_partition? __ LPAREN __ c:column_list  __ RPAREN __
+    p:insert_partition? __ LPAREN __ c:replace_insert_column_list  __ RPAREN __
     v:insert_value_clause __
     odp:on_duplicate_update_stmt? {
       if (t) {
@@ -3435,6 +3435,10 @@ column_ref
       };
     }
 
+replace_insert_column_list
+  = head:insert_column tail:(__ COMMA __ insert_column)* {
+      return createList(head, tail);
+    }
 column_list
   = head:column tail:(__ COMMA __ column)* {
       return createList(head, tail);
@@ -3510,6 +3514,12 @@ column_without_kw
     return name;
   }
   / quoted_ident
+
+insert_column
+  = name:column_name !{ return reservedMap[name.toUpperCase()] === true; } { return name; }
+  / n:backticks_quoted_ident {
+    return n
+  }
 
 column
   = name:column_name !{ return reservedMap[name.toUpperCase()] === true; } { return name; }
