@@ -111,6 +111,13 @@ describe('Mysql Customize', () => {
         "CREATE TABLE `table_name` (`amount1` BIT NULL, `amount2` BIT(10) NOT NULL)",
       ],
     },
+    {
+      title: 'Insert using a keyword as column name',
+      sql: [
+        "insert into table_name (`key`, col2, `col3`, `DOUBLE`) values ('3333', 1, 2, 1.5)",
+        "INSERT INTO `table_name` (`key`, col2, `col3`, `DOUBLE`) VALUES ('3333',1,2,1.5)",
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
