@@ -1397,40 +1397,6 @@ create_column_definition
       }
     }
 
-alter_column_definition
-  = c:column_ref __
-    kw:(KW_TYPE / KW_SET / KW_DROP)? __
-    d:data_type? __
-    cdo:column_definition_opt_list? {
-      /*
-      => {
-        column: column_ref;
-        definition: data_type;
-        nullable: column_constraint['nullable'];
-        default_val: column_constraint['default_val'];
-        auto_increment?: 'auto_increment';
-        unique?: 'unique' | 'unique key';
-        primary?: 'key' | 'primary key';
-        comment?: keyword_comment;
-        collate?: collate_expr;
-        column_format?: column_format;
-        storage?: storage;
-        reference_definition?: reference_definition;
-        resource: 'column';
-      }
-      */
-      columnList.add(`create::${c.table}::${c.column.expr.value}`)
-      return {
-        column: c,
-        definition: {
-          ...d,
-          prefix: kw
-        },
-        resource: 'column',
-        ...(cdo || {})
-      }
-    }
-
 column_constraint
   = n:constraint_name {
     // => { constraint: constraint_name; }
@@ -1935,7 +1901,6 @@ alter_action
   = ALTER_ADD_COLUMN
   / ALTER_ADD_CONSTRAINT
   / ALTER_DROP_COLUMN
-  / ALTER_ALTER_COLUMN
   / ALTER_RENAME_COLUMN
   / ALTER_ADD_INDEX_OR_KEY
   / ALTER_ADD_FULLETXT_SPARITAL_INDEX
@@ -1963,26 +1928,6 @@ ALTER_ADD_COLUMN
       return {
         action: 'add',
         if_not_exists: ife,
-        ...cd,
-        keyword: kc,
-        resource: 'column',
-        type: 'alter',
-      }
-    }
-
-ALTER_ALTER_COLUMN
-  = KW_ALTER __
-    kc:KW_COLUMN? __
-    cd:alter_column_definition {
-      /* => {
-        action: 'alter';
-        keyword: KW_COLUMN;
-        resource: 'column';
-        type: 'alter';
-      } & alter_column_definition;
-      */
-      return {
-        action: 'alter',
         ...cd,
         keyword: kc,
         resource: 'column',
