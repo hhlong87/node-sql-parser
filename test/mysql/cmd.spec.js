@@ -38,7 +38,7 @@ describe('Mysql Customize', () => {
       title: 'Create table option with quote',
       sql: [
         "CREATE TABLE `table_name` (`id` int) ENGINE 'InnoDB' DEFAULT CHARSET 'utf8mb4' COLLATE 'utf8mb4_0900_ai_ci' COMMENT 'test comment'",
-        "CREATE TABLE `table_name` (`id` INT) ENGINE INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'test comment'",
+        "CREATE TABLE `table_name` (`id` INT) ENGINE INNODB DEFAULT CHARSET 'utf8mb4' COLLATE 'utf8mb4_0900_ai_ci' COMMENT 'test comment'",
       ],
     },
     {

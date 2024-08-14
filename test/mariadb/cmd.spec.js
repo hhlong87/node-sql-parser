@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const Parser = require('../../src/parser').default
 
-describe('MariaDB Command SQL', () => {
+describe('MariaDB Customize', () => {
   const parser = new Parser();
   const opt = { database: 'mariadb' }
 
