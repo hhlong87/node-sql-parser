@@ -45,7 +45,7 @@ function castToSQL(expr) {
   }
   if (alias) suffix += ` AS ${identifierToSql(alias)}`
   const arrayDimension = arrayDimensionToSymbol(target)
-  const result = [prefix, symbolChar, quoted, dataType, quoted, arrayDimension, str, suffix].filter(hasVal).join('')
+  const result = [prefix, symbolChar, quoted, dataType, quoted, str, arrayDimension, suffix].filter(hasVal).join('')
   return outParentheses ? `(${result})` : result
 }
 
