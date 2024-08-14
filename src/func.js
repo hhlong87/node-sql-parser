@@ -49,7 +49,7 @@ function castToSQL(expr) {
     }
     if (i === 0) targetResult.push(prefix)
     const arrayDimension = arrayDimensionToSymbol(target)
-    targetResult.push(symbolChar, quoted, dataType, quoted, arrayDimension, str, suffix)
+    targetResult.push(symbolChar, quoted, dataType, quoted, str, arrayDimension, suffix)
     result.push(targetResult.filter(hasVal).join(''))
   }
   if (alias) result.push(` AS ${identifierToSql(alias)}`)

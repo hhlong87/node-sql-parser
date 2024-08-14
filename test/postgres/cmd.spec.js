@@ -69,6 +69,20 @@ describe('Postgres Customize', () => {
         'CREATE TABLE "table_name" (created_at TIMESTAMPTZ NOT NULL, updated_at TIMESTAMP NOT NULL)',
       ],
     },
+    {
+      title: 'Array varchar',
+      sql: [
+        'CREATE TABLE "table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY []::VARCHAR(126)[])',
+        'CREATE TABLE "table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY[]::VARCHAR(126)[])',
+      ],
+    },
+    {
+      title: 'Array[10] varchar',
+      sql: [
+        'CREATE TABLE "table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY[10]::VARCHAR(126)[10])',
+        'CREATE TABLE "table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY[10]::VARCHAR(126)[10])',
+      ],
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
