@@ -1891,6 +1891,28 @@ alter_table_stmt
       };
     }
 
+comment_on_stmt
+  = KW_COMMENT __ KW_ON __
+    kw:(KW_COLUMN / KW_TABLE / KW_INDEX) __
+    c:column_ref __
+    KW_IS __
+    s:literal_string {
+      /* => {
+        column: column_ref;
+        keyword: 'COLUMN';
+        resource: 'column';
+        type: 'comment';
+        value: literal_string;
+      } */
+      return {
+        column: c,
+        keyword: kw,
+        resource: 'column',
+        type: 'comment',
+        value: `'${s.value}'`
+      }
+    }
+
 alter_action_list
   = head:alter_action tail:(__ COMMA __ alter_action)* {
       // => alter_action[]

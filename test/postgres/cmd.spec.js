@@ -79,8 +79,22 @@ describe('Postgres Customize', () => {
     {
       title: 'Array[10] varchar',
       sql: [
-        'CREATE TABLE "table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY[10]::VARCHAR(126)[10])',
-        'CREATE TABLE "table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY[10]::VARCHAR(126)[10])',
+        'CREATE TABLE public."table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY[10]::VARCHAR(126)[10])',
+        'CREATE TABLE "public"."table_name" (zip_codes VARCHAR(126)[] DEFAULT ARRAY[10]::VARCHAR(126)[10])',
+      ],
+    },
+    {
+      title: 'Comment on column full path',
+      sql: [
+        `COMMENT ON COLUMN schema_name.table_name.column_name IS 'a new comment'`,
+        `COMMENT ON COLUMN "schema_name"."table_name".column_name IS 'a new comment'`,
+      ],
+    },
+    {
+      title: 'Comment on column',
+      sql: [
+        `COMMENT ON COLUMN "columnName" IS '요청하신'`,
+        `COMMENT ON COLUMN "columnName" IS '요청하신'`,
       ],
     },
   ]

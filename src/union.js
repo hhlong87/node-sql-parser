@@ -31,8 +31,10 @@ import { procToSQL } from './proc'
 import { transactionToSQL } from './transaction'
 import { showToSQL } from './show'
 import { hasVal, toUpper } from './util'
+import { commentOnToSQL } from './comment-on'
 
 const typeToSQLFn = {
+  comment     : commentOnToSQL,
   alter       : alterToSQL,
   analyze     : analyzeToSQL,
   attach      : attachToSQL,

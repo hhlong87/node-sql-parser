@@ -450,6 +450,16 @@ export interface alter_table_stmt_node {
 
 export type alter_table_stmt = AstStatement<alter_table_stmt_node>;
 
+
+
+export type comment_on_stmt = {
+        column: column_ref;
+        keyword: 'COLUMN';
+        resource: 'column';
+        type: 'comment';
+        value: literal_string;
+      };
+
 export type alter_action_list = alter_action[];
 
 export type alter_action = ALTER_ADD_COLUMN | ALTER_ADD_CONSTRAINT | ALTER_DROP_COLUMN | ALTER_RENAME_COLUMN | ALTER_ADD_INDEX_OR_KEY | ALTER_ADD_FULLETXT_SPARITAL_INDEX | ALTER_RENAME | ALTER_ALGORITHM | ALTER_LOCK | ALTER_OWNER_TO | ALTER_COLUMN_DATA_TYPE | ALTER_COLUMN_DEFAULT | ALTER_COLUMN_NOT_NULL;
