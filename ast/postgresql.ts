@@ -7,7 +7,7 @@
 
 export type start = multiple_stmt | create_function_stmt;
 
-export type cmd_stmt = drop_stmt | create_stmt | declare_stmt | truncate_stmt | rename_stmt | call_stmt | use_stmt | alter_stmt | set_stmt | lock_stmt | show_stmt | deallocate_stmt | grant_revoke_stmt | if_else_stmt | raise_stmt | execute_stmt | for_loop_stmt | transaction_stmt;
+export type cmd_stmt = drop_stmt | create_stmt | declare_stmt | truncate_stmt | rename_stmt | call_stmt | use_stmt | alter_stmt | set_stmt | lock_stmt | show_stmt | deallocate_stmt | grant_revoke_stmt | if_else_stmt | raise_stmt | execute_stmt | for_loop_stmt | transaction_stmt | comment_on_stmt;
 
 export type create_stmt = create_table_stmt | create_constraint_trigger | create_extension_stmt | create_index_stmt | create_sequence | create_db_stmt | create_domain_stmt | create_type_stmt | create_view_stmt | create_aggregate_stmt;
 
@@ -406,6 +406,16 @@ export interface alter_table_stmt_node {
       }
 
 export type alter_table_stmt = AstStatement<alter_table_stmt_node>;
+
+
+
+export type comment_on_stmt = {
+        column: column_ref;
+        keyword: 'COLUMN';
+        resource: 'column';
+        type: 'comment';
+        value: literal_string;
+      };
 
 export type alter_action_list = alter_action[];
 

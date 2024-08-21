@@ -238,6 +238,7 @@ cmd_stmt
   / execute_stmt
   / for_loop_stmt
   / transaction_stmt
+  / comment_on_stmt
 
 create_stmt
   = create_table_stmt
@@ -1732,6 +1733,28 @@ alter_table_stmt
           expr: e
         }
       };
+    }
+
+comment_on_stmt
+  = KW_COMMENT __ KW_ON __
+    kw:(KW_COLUMN / KW_TABLE / KW_INDEX) __
+    c:column_ref __
+    KW_IS __
+    s:literal_string {
+      /* => {
+        column: column_ref;
+        keyword: 'COLUMN';
+        resource: 'column';
+        type: 'comment';
+        value: literal_string;
+      } */
+      return {
+        column: c,
+        keyword: kw,
+        resource: 'column',
+        type: 'comment',
+        value: `'${s.value}'`
+      }
     }
 
 alter_action_list
