@@ -1270,6 +1270,8 @@ alter_action
   / ALTER_ADD_INDEX_OR_KEY
   / ALTER_ADD_FULLETXT_SPARITAL_INDEX
   / ALTER_RENAME_COLUMN
+  / ALTER_RENAME_KEY
+  / ALTER_RENAME_INDEX
   / ALTER_RENAME_TABLE
   / ALTER_ALGORITHM
   / ALTER_LOCK
@@ -1438,6 +1440,36 @@ ALTER_RENAME_COLUMN
       type: 'alter',
       resource: 'column',
       keyword: 'column',
+      old_column: c,
+      prefix: kw && kw[0].toLowerCase(),
+      column: tn
+    }
+  }
+
+ALTER_RENAME_KEY
+  = KW_RENAME __ KW_KEY __ c:column_ref __
+  kw:(KW_TO / KW_AS)? __
+  tn:column_ref {
+    return {
+      action: 'rename',
+      type: 'alter',
+      resource: 'column',
+      keyword: 'key',
+      old_column: c,
+      prefix: kw && kw[0].toLowerCase(),
+      column: tn
+    }
+  }
+
+ALTER_RENAME_INDEX
+  = KW_RENAME __ KW_INDEX __ c:column_ref __
+  kw:(KW_TO / KW_AS)? __
+  tn:column_ref {
+    return {
+      action: 'rename',
+      type: 'alter',
+      resource: 'column',
+      keyword: 'index',
       old_column: c,
       prefix: kw && kw[0].toLowerCase(),
       column: tn

@@ -118,6 +118,20 @@ describe('Mysql Customize', () => {
         "INSERT INTO `table_name` (`key`, col2, `col3`, `DOUBLE`) VALUES ('3333',1,2,1.5)",
       ],
     },
+    {
+      title: 'Rename key',
+      sql: [
+        'ALTER TABLE table_name RENAME KEY `KEY1` TO `KEY2`;',
+        'ALTER TABLE `table_name` RENAME KEY `KEY1` TO `KEY2`'
+      ]
+    },
+    {
+      title: 'Rename index',
+      sql: [
+        'ALTER TABLE table_name RENAME INDEX `IDX1` TO `IDX2`;',
+        'ALTER TABLE `table_name` RENAME INDEX `IDX1` TO `IDX2`'
+      ]
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
