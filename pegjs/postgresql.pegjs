@@ -700,7 +700,7 @@ create_func_opt
     }
   }
   / return_stmt
-  
+
 create_function_stmt
   = a:KW_CREATE __
   or:(KW_OR __ KW_REPLACE)? __
@@ -1066,7 +1066,7 @@ include_column
       columns:c,
     }
   }
-  
+
 create_index_stmt
   = a:KW_CREATE __
   kw:KW_UNIQUE? __
@@ -1751,28 +1751,6 @@ alter_table_stmt
           expr: e
         }
       };
-    }
-
-comment_on_stmt
-  = KW_COMMENT __ KW_ON __
-    kw:(KW_COLUMN / KW_TABLE / KW_INDEX) __
-    c:column_ref __
-    KW_IS __
-    s:literal_string {
-      /* => {
-        column: column_ref;
-        keyword: 'COLUMN';
-        resource: 'column';
-        type: 'comment';
-        value: literal_string;
-      } */
-      return {
-        column: c,
-        keyword: kw,
-        resource: 'column',
-        type: 'comment',
-        value: `'${s.value}'`
-      }
     }
 
 alter_action_list
@@ -3052,7 +3030,7 @@ transaction_mode_isolation_level
       value: `read ${e.toLowerCase()}`
     }
   }
-  
+
 transaction_mode
   = 'ISOLATION'i __ 'LEVEL'i __ l:transaction_mode_isolation_level {
     // => { type: 'origin'; value: string; }
