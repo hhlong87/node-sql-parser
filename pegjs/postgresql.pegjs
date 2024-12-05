@@ -1788,7 +1788,7 @@ alter_sequence_stmt
         }
       }
   }
-  
+
 alter_function_stmt
   = KW_ALTER __ t:'FUNCTION'i __ s:table_name __ ags:(LPAREN __ alter_func_args? __ RPAREN)? __ ac:(ALTER_RENAME / ALTER_OWNER_TO / ALTER_SET_SCHEMA) {
     // => AstStatement<alter_resource_stmt_node>
@@ -4071,6 +4071,7 @@ update_stmt
           from: f,
           where: w,
           returning: r,
+          ...getLocationObject(),
         }
       };
     }
@@ -4121,6 +4122,7 @@ delete_stmt
           from: f,
           where: w,
           returning: r,
+          ...getLocationObject(),
         }
       };
     }
@@ -4258,6 +4260,7 @@ replace_insert_stmt
           partition: p,
           conflict: oc,
           returning: r,
+          ...getLocationObject(),
         }
       };
     }
@@ -4288,6 +4291,7 @@ insert_no_columns_stmt
           partition: p,
           prefix,
           returning: r,
+          ...getLocationObject(),
         }
       };
     }
@@ -5120,7 +5124,7 @@ position_func_clause
         ...getLocationObject(),
     };
   }
-  
+
 trim_position
   = 'BOTH'i / 'LEADING'i / 'TRAILING'i
 
