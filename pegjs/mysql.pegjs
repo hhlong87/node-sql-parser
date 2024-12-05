@@ -2761,6 +2761,7 @@ update_stmt
           where: w,
           orderby: or,
           limit: lc,
+          ...getLocationObject(),
         }
       };
     }
@@ -2801,6 +2802,7 @@ delete_stmt
           where: w,
           orderby: or,
           limit: l,
+          ...getLocationObject(),
         }
       };
     }
@@ -2869,6 +2871,7 @@ replace_insert_stmt
           partition: p,
           prefix,
           on_duplicate_update: odp,
+          ...getLocationObject(),
         }
       };
     }
@@ -2898,6 +2901,7 @@ insert_no_columns_stmt
           partition: p,
           prefix,
           on_duplicate_update: odp,
+          ...getLocationObject(),
         }
       };
     }
@@ -2928,6 +2932,7 @@ insert_into_set
           prefix,
           set: l,
           on_duplicate_update: odp,
+          ...getLocationObject(),
         }
       };
     }

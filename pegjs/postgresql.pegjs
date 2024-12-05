@@ -3983,6 +3983,7 @@ update_stmt
           from: f,
           where: w,
           returning: r,
+          ...getLocationObject(),
         }
       };
     }
@@ -4028,7 +4029,8 @@ delete_stmt
           type: 'delete',
           table: t,
           from: f,
-          where: w
+          where: w,
+          ...getLocationObject(),
         }
       };
     }
@@ -4166,6 +4168,7 @@ replace_insert_stmt
           partition: p,
           conflict: oc,
           returning: r,
+          ...getLocationObject(),
         }
       };
     }
@@ -4196,6 +4199,7 @@ insert_no_columns_stmt
           partition: p,
           prefix,
           returning: r,
+          ...getLocationObject(),
         }
       };
     }
