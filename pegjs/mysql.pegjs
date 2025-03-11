@@ -1778,7 +1778,14 @@ create_option_character_set
   }
 
 table_option
-  = kw:('AUTO_INCREMENT'i / 'AVG_ROW_LENGTH'i / 'KEY_BLOCK_SIZE'i / 'MAX_ROWS'i / 'MIN_ROWS'i / 'STATS_SAMPLE_PAGES'i) __ s:(KW_ASSIGIN_EQUAL)? __ v:literal_numeric {
+  = kw:('AUTO_INCREMENT'i) __ s:(KW_ASSIGIN_EQUAL)? __ v:literal_numeric {
+    return {
+      keyword: kw.toLowerCase(),
+      symbol: s,
+      value: v.value === 0 ? '0' : v.value
+    }
+  }
+  / kw:('AVG_ROW_LENGTH'i / 'KEY_BLOCK_SIZE'i / 'MAX_ROWS'i / 'MIN_ROWS'i / 'STATS_SAMPLE_PAGES'i) __ s:(KW_ASSIGIN_EQUAL)? __ v:literal_numeric {
     return {
       keyword: kw.toLowerCase(),
       symbol: s,

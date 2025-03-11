@@ -2560,7 +2560,19 @@ create_option_character_set
   }
 
 table_option
-  = kw:('AUTO_INCREMENT'i / 'AVG_ROW_LENGTH'i / 'KEY_BLOCK_SIZE'i / 'MAX_ROWS'i / 'MIN_ROWS'i / 'STATS_SAMPLE_PAGES'i) __ s:(KW_ASSIGIN_EQUAL)? __ v:literal_numeric {
+  = kw:('AUTO_INCREMENT'i) __ s:(KW_ASSIGIN_EQUAL)? __ v:literal_numeric {
+    /* => {
+      keyword: 'auto_increment' | 'avg_row_length' | 'key_block_size' | 'max_rows' | 'min_rows' | 'stats_sample_pages';
+      symbol: '=';
+      value: number; // <== literal_numeric['value']
+      } */
+    return {
+      keyword: kw.toLowerCase(),
+      symbol: s,
+      value: v.value === 0 ? '0' : v.value
+    }
+  }
+  / kw:('AVG_ROW_LENGTH'i / 'KEY_BLOCK_SIZE'i / 'MAX_ROWS'i / 'MIN_ROWS'i / 'STATS_SAMPLE_PAGES'i) __ s:(KW_ASSIGIN_EQUAL)? __ v:literal_numeric {
     /* => {
       keyword: 'auto_increment' | 'avg_row_length' | 'key_block_size' | 'max_rows' | 'min_rows' | 'stats_sample_pages';
       symbol: '=';

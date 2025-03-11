@@ -715,6 +715,8 @@ export type create_option_character_set = {
 
 
 
+
+
 export type table_option = {
       keyword: 'auto_increment' | 'avg_row_length' | 'key_block_size' | 'max_rows' | 'min_rows' | 'stats_sample_pages';
       symbol: '=';
