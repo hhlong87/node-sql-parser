@@ -132,6 +132,13 @@ describe('Mysql Customize', () => {
         'ALTER TABLE `table_name` RENAME INDEX `IDX1` TO `IDX2`'
       ]
     },
+    {
+      title: 'Create table with auto increment 0',
+      sql: [
+        'CREATE TABLE foo (id int) ENGINE = InnoDB AUTO_INCREMENT = 0 COMMENT="Long";',
+        'CREATE TABLE `foo` (`id` INT) ENGINE = INNODB AUTO_INCREMENT = 0 COMMENT = \'Long\''
+      ]
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {

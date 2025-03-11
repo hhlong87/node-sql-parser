@@ -97,6 +97,13 @@ describe('Postgres Customize', () => {
         `COMMENT ON COLUMN "columnName" IS '요청하신'`,
       ],
     },
+    {
+      title: 'Create table with auto increment 0',
+      sql: [
+        'CREATE TABLE foo (id int) AUTO_INCREMENT = 0',
+        'CREATE TABLE "foo" (id INT) AUTO_INCREMENT = 0'
+      ]
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
