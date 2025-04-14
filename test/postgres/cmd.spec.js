@@ -104,6 +104,20 @@ describe('Postgres Customize', () => {
         'CREATE TABLE "foo" (id INT) AUTO_INCREMENT = 0'
       ]
     },
+    {
+      title: 'Create materialized view',
+      sql: [
+        'CREATE MATERIALIZED VIEW popular_hotels AS SELECT hotel_id FROM bookings WHERE id > 1',
+        'CREATE MATERIALIZED VIEW "popular_hotels" AS SELECT hotel_id FROM "bookings" WHERE id > 1'
+      ]
+    },
+    {
+      title: 'Alter materialized view',
+      sql: [
+        'Alter materialized view view_shop_owner_metric owner to master',
+        'ALTER MATERIALIZED VIEW "view_shop_owner_metric" OWNER TO "master"'
+      ]
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {

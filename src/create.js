@@ -442,6 +442,9 @@ function createToSQL(stmt) {
     case 'view':
       sql = createViewToSQL(stmt)
       break
+    case 'materialized view':
+      sql = createViewToSQL(stmt)
+      break
     case 'domain':
       sql = createDomainToSQL(stmt)
       break
