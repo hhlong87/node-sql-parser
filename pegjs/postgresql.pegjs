@@ -253,11 +253,13 @@ create_stmt
   / create_domain_stmt
   / create_type_stmt
   / create_view_stmt
+  / create_materialized_view_stmt
   / create_aggregate_stmt
 
 alter_stmt
   = alter_table_stmt
   / alter_schema_stmt
+  / alter_materialized_view_stmt
   / alter_domain_type_stmt
   / alter_function_stmt
   / alter_aggregate_stmt
@@ -461,6 +463,44 @@ create_view_stmt
       ast: {
         type: a[0].toLowerCase(),
         keyword: 'view',
+        replace: or && 'or replace',
+        temporary: tp && tp[0].toLowerCase(),
+        recursive: r && r.toLowerCase(),
+        columns: c && c[2],
+        select: s,
+        view: v,
+        with_options: wo && wo[4],
+        with: w,
+      }
+    }
+  }
+create_materialized_view_stmt
+  = a:KW_CREATE __ or:(KW_OR __ KW_REPLACE)? __ tp:(KW_TEMP / KW_TEMPORARY)? __ r:KW_RECURSIVE? __
+  KW_MATERIALIZED __ KW_VIEW __ v:table_name __ c:(LPAREN __ column_list __ RPAREN)? __ wo:(KW_WITH __ LPAREN __ with_view_options __ RPAREN)? __
+  KW_AS __ s:select_stmt __ w:view_with? {
+    /*
+      export type create_view_stmt_t = {
+        type: 'create',
+        keyword: 'view',
+        replace?: 'or replace',
+        temporary?: 'temporary' | 'temp',
+        recursive?: 'recursive',
+        view: table_name,
+        columns?: column_list,
+        select: select_stmt,
+        with_options?: with_view_options,
+        with?: string,
+      }
+      => AstStatement<create_view_stmt_t>
+      */
+    v.view = v.table
+    delete v.table
+    return {
+      tableList: Array.from(tableList),
+      columnList: columnListTableAlias(columnList),
+      ast: {
+        type: a[0].toLowerCase(),
+        keyword: 'materialized view',
         replace: or && 'or replace',
         temporary: tp && tp[0].toLowerCase(),
         recursive: r && r.toLowerCase(),
@@ -1853,6 +1893,25 @@ alter_schema_stmt
           type: 'alter',
           keyword,
           schema: s,
+          expr: ac
+        }
+      };
+  }
+
+alter_materialized_view_stmt
+  = KW_ALTER __ t:KW_MATERIALIZED __ kw:KW_VIEW __ s:ident_name __ ac:(ALTER_RENAME / ALTER_OWNER_TO / ALTER_SET_SCHEMA) {
+    // => AstStatement<alter_resource_stmt_node>
+    const keyword = t.toLowerCase() + ' ' + kw.toLowerCase()
+    ac.resource = keyword
+    ac[keyword] = ac.table
+    delete ac.table
+    return {
+        tableList: Array.from(tableList),
+        columnList: columnListTableAlias(columnList),
+        ast: {
+          type: 'alter',
+          keyword,
+          view: s,
           expr: ac
         }
       };
@@ -5841,6 +5900,7 @@ KW_LOCAL          = "LOCAL"i     !ident_start { return 'LOCAL'; }
 KW_PERSIST        = "PERSIST"i   !ident_start { return 'PERSIST'; }
 KW_PERSIST_ONLY   = "PERSIST_ONLY"i   !ident_start { return 'PERSIST_ONLY'; }
 KW_VIEW           = "VIEW"i    !ident_start { return 'VIEW'; }
+KW_MATERIALIZED   = "MATERIALIZED"i    !ident_start { return 'MATERIALIZED'; }
 
 KW_VAR__PRE_AT = '@'
 KW_VAR__PRE_AT_AT = '@@'

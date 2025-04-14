@@ -9,9 +9,9 @@ export type start = multiple_stmt | create_function_stmt;
 
 export type cmd_stmt = drop_stmt | create_stmt | declare_stmt | truncate_stmt | rename_stmt | call_stmt | use_stmt | alter_stmt | set_stmt | lock_stmt | show_stmt | deallocate_stmt | grant_revoke_stmt | if_else_stmt | raise_stmt | execute_stmt | for_loop_stmt | transaction_stmt | comment_on_stmt;
 
-export type create_stmt = create_table_stmt | create_constraint_trigger | create_extension_stmt | create_index_stmt | create_sequence | create_db_stmt | create_domain_stmt | create_type_stmt | create_view_stmt | create_aggregate_stmt;
+export type create_stmt = create_table_stmt | create_constraint_trigger | create_extension_stmt | create_index_stmt | create_sequence | create_db_stmt | create_domain_stmt | create_type_stmt | create_view_stmt | create_materialized_view_stmt | create_aggregate_stmt;
 
-export type alter_stmt = alter_table_stmt | alter_schema_stmt | alter_domain_type_stmt | alter_function_stmt | alter_aggregate_stmt | alter_sequence_stmt;
+export type alter_stmt = alter_table_stmt | alter_schema_stmt | alter_materialized_view_stmt | alter_domain_type_stmt | alter_function_stmt | alter_aggregate_stmt | alter_sequence_stmt;
 
 export type crud_stmt = union_stmt | update_stmt | replace_insert_stmt | insert_no_columns_stmt | delete_stmt | cmd_stmt | proc_stmts;
 
@@ -79,6 +79,21 @@ export type create_view_stmt_t = {
       }
 
 export type create_view_stmt = AstStatement<create_view_stmt_t>;
+
+export type create_view_stmt_t = {
+        type: 'create',
+        keyword: 'view',
+        replace?: 'or replace',
+        temporary?: 'temporary' | 'temp',
+        recursive?: 'recursive',
+        view: table_name,
+        columns?: column_list,
+        select: select_stmt,
+        with_options?: with_view_options,
+        with?: string,
+      }
+
+export type create_materialized_view_stmt = AstStatement<create_view_stmt_t>;
 
 export type create_aggregate_opt_required = { type: string; symbol: '='; value: expr; }[];
 
@@ -438,6 +453,8 @@ export interface alter_resource_stmt_node {
 export type alter_domain_type_stmt = AstStatement<alter_resource_stmt_node>;
 
 export type alter_schema_stmt = AstStatement<alter_resource_stmt_node>;
+
+export type alter_materialized_view_stmt = AstStatement<alter_resource_stmt_node>;
 
 export interface alter_table_stmt_node {
         type: 'alter';
@@ -1848,6 +1865,8 @@ type KW_PERSIST = never;
 type KW_PERSIST_ONLY = never;
 
 type KW_VIEW = never;
+
+type KW_MATERIALIZED = never;
 
 type KW_VAR__PRE_AT = never;
 

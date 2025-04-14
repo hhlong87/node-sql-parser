@@ -39,6 +39,7 @@ function alterExprToSQL(expr) {
       name = expr[resource]
       break
     case 'table':
+    case 'materialized view':
     case 'schema':
       name = identifierToSql(expr[resource])
       break
@@ -114,6 +115,12 @@ function alterSchemaToSQL(stmt) {
   return result.filter(hasVal).join(' ')
 }
 
+function alterMaterializedViewToSQL(stmt) {
+  const { expr, keyword, view, type } = stmt
+  const result = [toUpper(type), toUpper(keyword), identifierToSql(view), alterExprToSQL(expr)]
+  return result.filter(hasVal).join(' ')
+}
+
 function alterDomainTypeToSQL(stmt) {
   const { expr, keyword, name, type } = stmt
   const result = [
@@ -172,6 +179,8 @@ function alterToSQL(stmt) {
       return alterTableToSQL(stmt)
     case 'schema':
       return alterSchemaToSQL(stmt)
+    case 'materialized view':
+      return alterMaterializedViewToSQL(stmt)
     case 'sequence':
       return alterSequenceToSQL(stmt)
     case 'domain':
