@@ -68,10 +68,9 @@ function columnDataType(definition) {
   const { dataType, length, suffix, prefix, scale, expr } = definition
   const parentheses = length != null && true || false
   let result = dataTypeToSQL({ dataType, length, suffix, scale, parentheses })
-  if (prefix && prefix.length) result = `${prefix} ${result}`
   if (expr) result += exprToSQL(expr)
   if (prefix && prefix.length) {
-    if (result) {
+    if (result && result !== 'undefined') {
       result = `${prefix} ${result}`
     } else {
       result = prefix
@@ -118,6 +117,7 @@ function columnOption(definition) {
     unique: uniqueKey,
     generated_by: generatedBy,
     as_identity: asIdentity,
+    sequence,
     primary_key: primaryKey,
     column_format: columnFormat,
     reference_definition: referenceDefinition,
@@ -132,6 +132,9 @@ function columnOption(definition) {
   if (constraint) columnOpt.push(toUpper(constraint.keyword), literalToSQL(constraint.constraint))
   columnOpt.push(constraintDefinitionToSQL(check))
   columnOpt.push(toUpper(generatedBy), toUpper(asIdentity))
+  if (sequence) {
+    columnOpt.push(['(', toUpper(sequence.prefix), exprToSQL(sequence.value), ')'].filter(hasVal).join(' '))
+  }
   columnOpt.push(generatedExpressionToSQL(generated))
   if (generated) columnOpt.push(nullSQL)
   columnOpt.push(autoIncrementToSQL(autoIncrement), toUpper(primaryKey), toUpper(uniqueKey), commentToSQL(comment))

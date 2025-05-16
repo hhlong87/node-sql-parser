@@ -1337,6 +1337,10 @@ column_definition_opt
     // => { as_identity: 'as identity'; }
     return { as_identity: 'as identity' }
   }
+  / seq:( LPAREN __ create_sequence_definition __ RPAREN ) {
+    // => { sequence: create_sequence_definition }
+    return { sequence: seq[2] }
+  }
   / p:('PRIMARY'i)? __ 'KEY'i {
     // => { unique: 'key' | 'primary key'; }
     const sql = []

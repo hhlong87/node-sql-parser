@@ -950,7 +950,6 @@ alter_column_definition
       return {
         column: c,
         definition: {
-          ...d,
           prefix: kw
         },
         algorithm_option: al,
