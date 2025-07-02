@@ -103,7 +103,7 @@ function funcToSQL(expr) {
   const withinGroupStr = withinGroupToSQL(withinGroup)
   const suffixStr = exprToSQL(suffix)
   const funcName = [literalToSQL(name.schema), name.name.map(literalToSQL).join('.')].filter(hasVal).join('.')
-  if (!args) return [funcName, withinGroupStr, overStr].filter(hasVal).join(' ')
+  if (!args) return [parentheses ? `(${funcName})` : funcName, withinGroupStr, overStr].filter(hasVal).join(' ')
   let separator = expr.separator || ', '
   if (toUpper(funcName) === 'TRIM') separator = ' '
   let str = [funcName]

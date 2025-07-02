@@ -139,6 +139,13 @@ describe('Mysql Customize', () => {
         'CREATE TABLE `foo` (`id` INT) ENGINE = INNODB AUTO_INCREMENT = 0 COMMENT = \'Long\''
       ]
     },
+    {
+      title: 'Set default current_date when alter column',
+      sql: [
+        'ALTER TABLE foo ALTER COLUMN bar SET DEFAULT (current_date), ALGORITHM=INSTANT;',
+        'ALTER TABLE `foo` ALTER COLUMN `bar` SET DEFAULT (CURRENT_DATE), ALGORITHM = INSTANT'
+      ]
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {
