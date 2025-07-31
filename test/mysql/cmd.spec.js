@@ -146,6 +146,14 @@ describe('Mysql Customize', () => {
         'ALTER TABLE `foo` ALTER COLUMN `bar` SET DEFAULT (CURRENT_DATE), ALGORITHM = INSTANT'
       ]
     },
+    {
+      title: 'Multiple create table with partition',
+      sql: [
+        'CREATE TABLE table1 (shop_no1 BIGINT, part_date1 DATE, PRIMARY KEY (shop_no1, part_date1)) PARTITION BY RANGE (to_days(`part_date1`));\n' +
+        'CREATE TABLE table2 (shop_no2 BIGINT, part_date2 DATE, PRIMARY KEY (shop_no2, part_date2)) PARTITION BY RANGE (to_days(`part_date2`));',
+        'CREATE TABLE `table1` (`shop_no1` BIGINT, `part_date1` DATE, PRIMARY KEY (`shop_no1`, `part_date1`)) PARTITION BY RANGE (to_days(`part_date1`)) ; CREATE TABLE `table2` (`shop_no2` BIGINT, `part_date2` DATE, PRIMARY KEY (`shop_no2`, `part_date2`)) PARTITION BY RANGE (to_days(`part_date2`))'
+      ]
+    },
   ]
 
   function neatlyNestTestedSQL(sqlList) {

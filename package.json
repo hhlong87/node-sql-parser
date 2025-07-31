@@ -1,6 +1,6 @@
 {
   "name": "node-sql-parser-fork",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "description": "simple node sql parser",
   "main": "index.js",
   "types": "types.d.ts",

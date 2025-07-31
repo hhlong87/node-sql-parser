@@ -1834,10 +1834,10 @@ table_option
       value: c.toUpperCase()
     }
   }
-  / KW_PARTITION __ KW_BY __ rest:.* {
+  / kw:KW_PARTITION __ KW_BY __ rest:[^;]* {
     return {
       keyword: 'partition by',
-      value: rest.join('')
+      value: rest.join('').trim()
     }
   }
 
@@ -2119,7 +2119,7 @@ transaction_mode_isolation_level
       value: `read ${e.toLowerCase()}`
     }
   }
-  
+
 transaction_mode
   = 'ISOLATION'i __ 'LEVEL'i __ l:transaction_mode_isolation_level {
     return {
